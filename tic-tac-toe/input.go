@@ -12,9 +12,9 @@ func NewInput(reader io.Reader) *Input {
 	return &Input{reader}
 }
 
-func (i *Input) Read() (string, error) {
+func (i *Input) Read() string {
 	buf := make([]byte, 10)
-	n, err := i.reader.Read(buf)
+	n, _ := i.reader.Read(buf)
 	text := string(buf[:n])
-	return text, err
+	return text
 }
