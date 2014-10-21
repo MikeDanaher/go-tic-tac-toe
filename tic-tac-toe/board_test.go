@@ -26,4 +26,11 @@ var _ = Describe("Board", func() {
 		board.MakeMove(2, "x")
 		Expect(board.Cells[2]).To(Equal("x"))
 	})
+
+	It("Gets the available cells", func() {
+		board.MakeMove(2, "o")
+		board.MakeMove(3, "x")
+		cells := []int{0, 1, 4, 5, 6, 7, 8}
+		Expect(board.AvailableCells()).To(Equal(cells))
+	})
 })

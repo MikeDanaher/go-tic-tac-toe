@@ -14,3 +14,13 @@ func NewBoard(s int) *Board {
 func (b *Board) MakeMove(cell int, symbol string) {
 	b.Cells[cell] = symbol
 }
+
+func (b *Board) AvailableCells() []int {
+	var available []int
+	for i, symbol := range b.Cells {
+		if symbol == "" {
+			available = append(available, i)
+		}
+	}
+	return available
+}
