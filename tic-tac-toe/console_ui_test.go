@@ -17,14 +17,14 @@ var _ = Describe("Console UI", func() {
 
 	BeforeEach(func() {
 		mockWriter = NewMockWriter()
-		input = NewInput(NewMockReader("5"))
+		input = NewInput(NewMockReader("5\n"))
 		output = NewOutput(mockWriter)
 		ui = NewConsoleUI(input, output)
 	})
 
-	It("Prompts the user with a message", func() {
+	It("Displays a string to the given output", func() {
 		message := ChooseCell
-		ui.PromptForInput(message)
+		ui.DisplayMessage(message)
 		Expect(mockWriter.String()).Should(ContainSubstring(message))
 	})
 
@@ -33,4 +33,8 @@ var _ = Describe("Console UI", func() {
 		Expect(move).To(Equal(5))
 	})
 
+	It("Formats the board for printing", func() {
+		board := []string{"x", "", "o", "x", "", "", "x", "o", ""}
+		Expect(ui.FormatBoard(board)).To(Equal("\n x |   | o \n-----------\n x |   |   \n-----------\n x | o |   \n\n"))
+	})
 })

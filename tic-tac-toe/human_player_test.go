@@ -21,7 +21,7 @@ var _ = Describe("Human Player", func() {
 	)
 
 	BeforeEach(func() {
-		mockReader = NewMockReader("5")
+		mockReader = NewMockReader("5\n")
 		mockWriter = NewMockWriter()
 		ui = NewConsoleUI(NewInput(mockReader), NewOutput(mockWriter))
 	})

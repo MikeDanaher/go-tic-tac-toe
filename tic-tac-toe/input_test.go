@@ -8,11 +8,11 @@ import (
 
 var _ = Describe("GameInput", func() {
 
-	It("Reads the input from the given reader", func() {
+	It("Reads the input from the given reader, removeing newlines", func() {
 		mockReader := NewMockReader("Hello\n")
 		input := NewInput(mockReader)
 		text := input.Read()
-		Expect(text).To(Equal("Hello\n"))
+		Expect(text).To(Equal("Hello"))
 	})
 
 })

@@ -16,8 +16,9 @@ const (
 )
 
 func (player *HumanPlayer) GetMove(board []string, message string) int {
+	player.ui.DisplayMessage(player.ui.FormatBoard(board))
 	player.ui.DisplayMessage(message)
-	move := player.ui.GetNumber()
+	move := player.ui.GetNumber() - 1
 
 	if validMove(board, move) {
 		return move
