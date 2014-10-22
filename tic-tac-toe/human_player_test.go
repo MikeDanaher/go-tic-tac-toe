@@ -7,6 +7,12 @@ import (
 	. "github.com/onsi/gomega"
 )
 
+func makePlayer(symbol string, ui UI) Player {
+	player := NewHumanPlayer(ui)
+	player.AddSymbol(symbol)
+	return player
+}
+
 var _ = Describe("Human Player", func() {
 	var (
 		ui         UI
@@ -22,12 +28,12 @@ var _ = Describe("Human Player", func() {
 
 	It("Creates a new human player with a symbol", func() {
 		symbol := "x"
-		player := NewHumanPlayer(symbol, ui)
-		Expect(player.Symbol).To(Equal("x"))
+		player := makePlayer(symbol, ui)
+		Expect(player.Symbol()).To(Equal(symbol))
 	})
 
 	It("Gets the next move from the human player", func() {
-		player := NewHumanPlayer("x", ui)
+		player := makePlayer("x", ui)
 		board := []string{"", "x", "o", "", "", "", "", "o", "x"}
 		availableCells := []int{0, 3, 4, 5, 6}
 

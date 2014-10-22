@@ -1,12 +1,14 @@
 package tic_tac_toe
 
 type HumanPlayer struct {
-	Symbol string
 	ui     UI
+	symbol string
 }
 
-func NewHumanPlayer(s string, ui UI) *HumanPlayer {
-	return &HumanPlayer{s, ui}
+func NewHumanPlayer(ui UI) Player {
+	player := new(HumanPlayer)
+	player.ui = ui
+	return player
 }
 
 const (
@@ -14,13 +16,21 @@ const (
 )
 
 func (player *HumanPlayer) GetMove(board []string, message string) int {
-	player.ui.PromptForInput(message)
+	player.ui.DisplayMessage(message)
 	move := player.ui.GetNumber()
 
 	if validMove(board, move) {
 		return move
 	}
 	return player.GetMove(board, InvalidMove)
+}
+
+func (player *HumanPlayer) AddSymbol(symbol string) {
+	player.symbol = symbol
+}
+
+func (player *HumanPlayer) Symbol() string {
+	return player.symbol
 }
 
 // Maybe move to a utilities class?
