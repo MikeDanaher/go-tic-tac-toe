@@ -1,22 +1,24 @@
 package main
 
 import (
-	"bufio"
-	//	"bytes"
-	"fmt"
+	. "github.com/MikeDanaher/go-tic-tac-toe/tic-tac-toe"
 	"os"
 )
 
 func main() {
-	buf := make([]byte, 10)
-	reader := bufio.NewReader(os.Stdin)
-	fmt.Print("Please enter a cell: ")
-	//reader := bytes.NewBufferString("45")
-	writer := bufio.NewWriter(os.Stdout)
-	defer writer.Flush()
-	reader.Read(buf)
-	//text := string(buf[:10])
-	text := []byte(string(buf[:10]))
-	writer.Write(text)
-	fmt.Println("You entered: ", text)
+	input := NewInput(os.Stdin)
+	output := NewOutput(os.Stdout)
+	console := NewConsoleUI(input, output)
+
+	player1 := NewHumanPlayer(console)
+	player2 := NewHumanPlayer(console)
+
+	console.DisplayMessage(MainMenu)
+
+	player1.AddSymbol("x")
+	player2.AddSymbol("o")
+
+	game := NewGame(3)
+
+	game.Play(player1, player2)
 }

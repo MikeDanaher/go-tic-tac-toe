@@ -15,6 +15,6 @@ func NewInput(reader io.Reader) *Input {
 func (i *Input) Read() string {
 	buf := make([]byte, 10)
 	n, _ := i.reader.Read(buf)
-	text := string(buf[:n])
+	text := string(buf[:n-1])
 	return text
 }
