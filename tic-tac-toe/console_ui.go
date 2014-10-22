@@ -9,6 +9,17 @@ type ConsoleUI struct {
 	out *Output
 }
 
+const (
+	MainMenu string = "Tic-Tac-Toe in Go\n" +
+		"=====================================================\n" +
+		"Play the game by entering the number of your choice:" +
+		"1. Human vs. Human game" +
+		"2. Human vs. Computer game" +
+		"3. Exit"
+	ChooseCell    string = "Please select an available cell [1-9]: "
+	InvalidNumber string = "Please enter a valid number: "
+)
+
 func NewConsoleUI(in *Input, out *Output) *ConsoleUI {
 	return &ConsoleUI{in, out}
 }
@@ -21,7 +32,7 @@ func (c *ConsoleUI) GetNumber() int {
 	input, err := strconv.Atoi(c.in.Read())
 
 	if err != nil {
-		c.PromptForInput("Please enter a valid number: ")
+		c.PromptForInput(InvalidNumber)
 		c.GetNumber()
 	}
 

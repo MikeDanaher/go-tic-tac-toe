@@ -9,15 +9,18 @@ func NewHumanPlayer(s string, ui UI) *HumanPlayer {
 	return &HumanPlayer{s, ui}
 }
 
-func (player *HumanPlayer) GetMove(board []string) int {
-	//player.ui.PromptForInput()
-	//move = player.ui.GetInput()
-	move := 3
+const (
+	InvalidMove = "Invalid move, try again: "
+)
+
+func (player *HumanPlayer) GetMove(board []string, message string) int {
+	player.ui.PromptForInput(message)
+	move := player.ui.GetNumber()
 
 	if validMove(board, move) {
 		return move
 	}
-	return player.GetMove(board)
+	return player.GetMove(board, InvalidMove)
 }
 
 // Maybe move to a utilities class?
