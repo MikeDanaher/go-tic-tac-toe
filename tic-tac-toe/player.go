@@ -1,7 +1,7 @@
 package tic_tac_toe
 
 type Player interface {
-	AddSymbol(symbol string)
+	SetSymbol(symbol string)
 	Symbol() string
-	GetMove(board []string, message string) int
+	GetMove(board *Board, message string) int
 }

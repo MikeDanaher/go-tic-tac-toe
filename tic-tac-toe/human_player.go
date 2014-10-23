@@ -2,42 +2,28 @@ package tic_tac_toe
 
 type HumanPlayer struct {
 	ui     UI
+	rules  *Rules
 	symbol string
 }
 
-func NewHumanPlayer(ui UI) Player {
-	player := new(HumanPlayer)
-	player.ui = ui
-	return player
+func NewHumanPlayer(ui UI, rules *Rules) Player {
+	return &HumanPlayer{ui: ui, rules: rules}
 }
 
-const (
-	InvalidMove = "Invalid move, try again: "
-)
-
-func (player *HumanPlayer) GetMove(board []string, message string) int {
-	player.ui.DisplayMessage(player.ui.FormatBoard(board))
+func (player *HumanPlayer) GetMove(board *Board, message string) int {
 	player.ui.DisplayMessage(message)
 	move := player.ui.GetNumber() - 1
 
-	if validMove(board, move) {
+	if player.rules.ValidMove(move, board) {
 		return move
 	}
 	return player.GetMove(board, InvalidMove)
 }
 
-func (player *HumanPlayer) AddSymbol(symbol string) {
+func (player *HumanPlayer) SetSymbol(symbol string) {
 	player.symbol = symbol
 }
 
 func (player *HumanPlayer) Symbol() string {
 	return player.symbol
-}
-
-// Maybe move to a utilities class?
-func validMove(board []string, move int) bool {
-	if board[move] == "" {
-		return true
-	}
-	return false
 }

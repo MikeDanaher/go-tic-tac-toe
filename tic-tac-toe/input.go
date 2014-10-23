@@ -1,20 +1,19 @@
 package tic_tac_toe
 
 import (
-	"io"
+	"bytes"
+	"strings"
 )
 
 type Input struct {
-	reader io.Reader
+	reader *bytes.Buffer
 }
 
-func NewInput(reader io.Reader) *Input {
+func NewInput(reader *bytes.Buffer) *Input {
 	return &Input{reader}
 }
 
 func (i *Input) Read() string {
-	buf := make([]byte, 10)
-	n, _ := i.reader.Read(buf)
-	text := string(buf[:n-1])
-	return text
+	line, _ := i.reader.ReadString('\n')
+	return strings.Trim(line, "\n")
 }

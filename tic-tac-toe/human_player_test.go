@@ -7,9 +7,9 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-func makePlayer(symbol string, ui UI) Player {
-	player := NewHumanPlayer(ui)
-	player.AddSymbol(symbol)
+func makePlayer(symbol string, ui UI, rules *Rules) Player {
+	player := NewHumanPlayer(ui, rules)
+	player.SetSymbol(symbol)
 	return player
 }
 
@@ -18,27 +18,45 @@ var _ = Describe("Human Player", func() {
 		ui         UI
 		mockReader *bytes.Buffer
 		mockWriter *bytes.Buffer
+		board      *Board
+		rules      *Rules
 	)
 
 	BeforeEach(func() {
-		mockReader = NewMockReader("5\n")
+		moves := "5\n1\n"
+		mockReader = NewMockReader(moves)
 		mockWriter = NewMockWriter()
 		ui = NewConsoleUI(NewInput(mockReader), NewOutput(mockWriter))
+		rules = new(Rules)
+		board = NewBoard(3)
 	})
 
 	It("Creates a new human player with a symbol", func() {
 		symbol := "x"
-		player := makePlayer(symbol, ui)
+		player := makePlayer(symbol, ui, rules)
 		Expect(player.Symbol()).To(Equal(symbol))
 	})
 
 	It("Gets the next move from the human player", func() {
-		player := makePlayer("x", ui)
-		board := []string{"", "x", "o", "", "", "", "", "o", "x"}
-		availableCells := []int{0, 3, 4, 5, 6}
+		player := makePlayer("x", ui, rules)
+		board.MakeMove(2, "x")
+		board.MakeMove(3, "o")
+		board.MakeMove(7, "x")
+		availableCells := []int{0, 1, 4, 5, 6, 8}
 
 		move := player.GetMove(board, ChooseCell)
 		Expect(availableCells).To(ContainElement(move))
 	})
 
+	It("Prompts again if the given move was invalid", func() {
+		player := makePlayer("x", ui, rules)
+		board.MakeMove(2, "x")
+		board.MakeMove(4, "o")
+		board.MakeMove(3, "o")
+		board.MakeMove(7, "x")
+
+		move := player.GetMove(board, ChooseCell)
+		Expect(move).To(Equal(0))
+		Expect(mockWriter.String()).Should(ContainSubstring("Invalid move, try again: "))
+	})
 })
