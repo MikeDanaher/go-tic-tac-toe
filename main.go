@@ -1,24 +1,26 @@
 package main
 
 import (
+	"bytes"
 	. "github.com/MikeDanaher/go-tic-tac-toe/tic-tac-toe"
 	"os"
 )
 
 func main() {
-	input := NewInput(os.Stdin)
-	output := NewOutput(os.Stdout)
-	console := NewConsoleUI(input, output)
-
-	player1 := NewHumanPlayer(console)
-	player2 := NewHumanPlayer(console)
-
 	console.DisplayMessage(MainMenu)
 
-	player1.AddSymbol("x")
-	player2.AddSymbol("o")
+	rules := NewRules(new(Console3x3))
+	board := NewBoard(rules.BoardSize)
 
-	game := NewGame(3)
+	input := NewInput(bytes.NewBuffer(os.Stdin))
+	output := NewOutput(bytes.NewBuffer(os.Stdout))
+	console := NewConsoleUI(input, output)
 
-	game.Play(player1, player2)
+	player1 := NewHumanPlayer(console, rules)
+	player1.SetSymbol("x")
+	player2 := NewHumanPlayer(console, rules)
+	player2.SetSymbol("o")
+
+	game := NewGame(console, rules)
+	game.Play(board, player1, player2)
 }

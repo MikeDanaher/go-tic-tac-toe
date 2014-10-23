@@ -1,39 +1,27 @@
 package tic_tac_toe
 
-import (
-	"fmt"
-)
-
 type Game struct {
-	Board *Board
+	ui    UI
+	rules *Rules
 }
 
-func NewGame(size int) *Game {
-	board := NewBoard(size)
-	return &Game{board}
+func NewGame(ui UI, rules *Rules) *Game {
+	return &Game{ui, rules}
 }
 
-func (game *Game) Play(currentPlayer Player, opponent Player) {
-	move := currentPlayer.GetMove(game.Board.Cells, ChooseCell)
-	game.Board.MakeMove(move, currentPlayer.Symbol())
+func (game *Game) Play(board *Board, currentPlayer Player, opponent Player) {
+	game.ui.DisplayMessage(board.ToString())
+	move := currentPlayer.GetMove(board, ChooseCell)
+	board.MakeMove(move, currentPlayer.Symbol())
 
-	if gameOver(game.Board) {
-		endGame()
+	winner, symbol := game.rules.Winner(board)
+
+	if winner {
+		game.ui.DisplayMessage("Player " + symbol + " wins!")
+		game.ui.DisplayMessage(MainMenu)
+	} else if board.IsFull() {
+		game.ui.DisplayMessage("It's a tie!")
 	} else {
-		game.Play(opponent, currentPlayer)
+		game.Play(board, opponent, currentPlayer)
 	}
-}
-
-func gameOver(board *Board) bool {
-	for _, i := range board.Cells {
-		if i == "" {
-			return false
-		}
-	}
-	return true
-}
-
-func endGame() {
-	fmt.Println("Game Over")
-	fmt.Println(MainMenu)
 }
