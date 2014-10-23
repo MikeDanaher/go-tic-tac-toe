@@ -33,8 +33,4 @@ var _ = Describe("Console UI", func() {
 		Expect(move).To(Equal(5))
 	})
 
-	It("Formats the board for printing", func() {
-		board := []string{"x", "", "o", "x", "", "", "x", "o", ""}
-		Expect(ui.FormatBoard(board)).To(Equal("\n x |   | o \n-----------\n x |   |   \n-----------\n x | o |   \n\n"))
-	})
 })

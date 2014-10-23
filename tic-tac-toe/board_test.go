@@ -13,24 +13,38 @@ var _ = Describe("Board", func() {
 		board = NewBoard(3)
 	})
 
-	It("Creates a new board with size 3", func() {
-		Expect(board.Size).To(Equal(9))
-	})
-
-	It("Fills a new board with empty cells", func() {
-		cells := make([]string, 9)
-		Expect(board.Cells).To(Equal(cells))
+	It("Creates a blank 3x3 board", func() {
+		Expect(len(board.Cells())).To(Equal(9))
 	})
 
 	It("Fills a cell on the board with a symbol", func() {
 		board.MakeMove(2, "x")
-		Expect(board.Cells[2]).To(Equal("x"))
+		Expect(board.Cells()[2]).To(Equal("x"))
 	})
 
-	It("Gets the available cells", func() {
-		board.MakeMove(2, "o")
-		board.MakeMove(3, "x")
-		cells := []int{0, 1, 4, 5, 6, 7, 8}
-		Expect(board.AvailableCells()).To(Equal(cells))
+	It("Knows if the board is not full", func() {
+		board.MakeMove(2, "x")
+		Expect(board.IsFull()).To(BeFalse())
+	})
+
+	It("Knows if the board is full", func() {
+		board.MakeMove(0, "x")
+		board.MakeMove(1, "o")
+		board.MakeMove(2, "x")
+		board.MakeMove(3, "o")
+		board.MakeMove(4, "x")
+		board.MakeMove(5, "o")
+		board.MakeMove(6, "x")
+		board.MakeMove(7, "o")
+		board.MakeMove(8, "x")
+		Expect(board.IsFull()).To(BeTrue())
+	})
+
+	It("Gets the board as a string", func() {
+		board.MakeMove(1, "o")
+		board.MakeMove(4, "x")
+		board.MakeMove(5, "o")
+		board.MakeMove(8, "x")
+		Expect(board.ToString()).To(Equal("\n   | o |   \n-----------\n   | x | o \n-----------\n   |   | x \n\n"))
 	})
 })
