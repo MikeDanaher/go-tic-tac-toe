@@ -40,13 +40,11 @@ var _ = Describe("Human Player", func() {
 		board.MakeMove(2, "x")
 		board.MakeMove(3, "o")
 		board.MakeMove(7, "x")
-		availableCells := []int{0, 1, 4, 5, 6, 8}
 
-		moves := "5\n1\n"
-		mockReader.WriteString(moves)
+		mockReader.WriteString("5\n")
 
-		move := player.GetMove(board, ChooseCell)
-		Expect(availableCells).To(ContainElement(move))
+		move := player.GetMove(board, CHOOSE_CELL)
+		Expect(board.AvailableCells()).To(ContainElement(move))
 	})
 
 	It("Prompts again if the given move was invalid", func() {
@@ -56,11 +54,10 @@ var _ = Describe("Human Player", func() {
 		board.MakeMove(3, "o")
 		board.MakeMove(7, "x")
 
-		moves := "5\n1\n"
-		mockReader.WriteString(moves)
+		mockReader.WriteString("4\n1\n")
 
-		move := player.GetMove(board, ChooseCell)
-		Expect(move).To(Equal(0))
-		Expect(mockWriter.String()).Should(ContainSubstring("Invalid move, try again: "))
+		move := player.GetMove(board, CHOOSE_CELL)
+		Expect(move).To(Equal(1))
+		Expect(mockWriter.String()).Should(ContainSubstring(INVALID_MOVE))
 	})
 })

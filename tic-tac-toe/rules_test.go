@@ -12,9 +12,9 @@ var _ = Describe("Rules", func() {
 	var rules *Rules
 
 	BeforeEach(func() {
-		config = new(Config3x3)
+		config = new(Console3x3)
 		board = NewBoard(config.BoardSize())
-		rules = NewRules(config)
+		rules = NewRules(config.WinningLines())
 	})
 
 	It("Knows if a move is valid", func() {
@@ -22,15 +22,19 @@ var _ = Describe("Rules", func() {
 		Expect(rules.ValidMove(3, board)).To(BeTrue())
 	})
 
-	It("Knows if a move is invalid", func() {
+	It("Knows if a cell has alreayd been taken", func() {
 		board.MakeMove(2, "x")
 		Expect(rules.ValidMove(2, board)).To(BeFalse())
 	})
 
+	It("Knows if a move is invalid", func() {
+		Expect(rules.ValidMove(22, board)).To(BeFalse())
+	})
+
 	It("Knows if there is a winner", func() {
-		board.MakeMove(0, "x")
 		board.MakeMove(1, "x")
 		board.MakeMove(2, "x")
+		board.MakeMove(3, "x")
 
 		winner, symbol := rules.Winner(board)
 		Expect(winner).To(BeTrue())
@@ -38,8 +42,9 @@ var _ = Describe("Rules", func() {
 	})
 
 	It("Knows if there is not a winner", func() {
-		board.MakeMove(0, "x")
+		board.MakeMove(1, "x")
 		board.MakeMove(2, "x")
+		board.MakeMove(9, "x")
 
 		winner, symbol := rules.Winner(board)
 		Expect(winner).To(BeFalse())

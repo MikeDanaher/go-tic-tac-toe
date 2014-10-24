@@ -30,7 +30,7 @@ func (c *ConsoleUI) GetNumber() int {
 	input, err := strconv.Atoi(readLine(c.in))
 
 	if err != nil {
-		c.DisplayMessage(InvalidNumber)
+		c.DisplayMessage(INVALID_NUMBER)
 		return c.GetNumber()
 	}
 

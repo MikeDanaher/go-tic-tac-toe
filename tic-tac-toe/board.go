@@ -16,11 +16,21 @@ func NewBoard(s int) *Board {
 }
 
 func (b *Board) MakeMove(cell int, symbol string) {
-	b.cells[cell] = symbol
+	b.cells[cell-1] = symbol
 }
 
 func (b *Board) Cells() []string {
 	return b.cells
+}
+
+func (b *Board) AvailableCells() []int {
+	var available []int
+	for i, v := range b.cells {
+		if v == "" {
+			available = append(available, i+1)
+		}
+	}
+	return available
 }
 
 func (b *Board) IsFull() bool {

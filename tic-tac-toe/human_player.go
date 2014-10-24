@@ -12,12 +12,12 @@ func NewHumanPlayer(ui UI, rules *Rules) Player {
 
 func (player *HumanPlayer) GetMove(board *Board, message string) int {
 	player.ui.DisplayMessage(message)
-	move := player.ui.GetNumber() - 1
+	move := player.ui.GetNumber()
 
 	if player.rules.ValidMove(move, board) {
 		return move
 	}
-	return player.GetMove(board, InvalidMove)
+	return player.GetMove(board, INVALID_MOVE)
 }
 
 func (player *HumanPlayer) SetSymbol(symbol string) {

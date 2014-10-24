@@ -19,7 +19,14 @@ var _ = Describe("Board", func() {
 
 	It("Fills a cell on the board with a symbol", func() {
 		board.MakeMove(2, "x")
-		Expect(board.Cells()[2]).To(Equal("x"))
+		Expect(board.Cells()[1]).To(Equal("x"))
+	})
+
+	It("Gets the available cells on the board", func() {
+		board.MakeMove(3, "o")
+		board.MakeMove(6, "x")
+		board.MakeMove(8, "0")
+		Expect(board.AvailableCells()).To(Equal([]int{1, 2, 4, 5, 7, 9}))
 	})
 
 	It("Knows if the board is not full", func() {
@@ -28,7 +35,6 @@ var _ = Describe("Board", func() {
 	})
 
 	It("Knows if the board is full", func() {
-		board.MakeMove(0, "x")
 		board.MakeMove(1, "o")
 		board.MakeMove(2, "x")
 		board.MakeMove(3, "o")
@@ -37,6 +43,7 @@ var _ = Describe("Board", func() {
 		board.MakeMove(6, "x")
 		board.MakeMove(7, "o")
 		board.MakeMove(8, "x")
+		board.MakeMove(9, "x")
 		Expect(board.IsFull()).To(BeTrue())
 	})
 
@@ -45,6 +52,6 @@ var _ = Describe("Board", func() {
 		board.MakeMove(4, "x")
 		board.MakeMove(5, "o")
 		board.MakeMove(8, "x")
-		Expect(board.String()).To(Equal("\n   | o |   \n-----------\n   | x | o \n-----------\n   |   | x \n\n"))
+		Expect(board.String()).To(Equal("\n o |   |   \n-----------\n x | o |   \n-----------\n   | x |   \n\n"))
 	})
 })

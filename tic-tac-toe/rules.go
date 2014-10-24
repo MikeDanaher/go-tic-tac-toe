@@ -1,20 +1,25 @@
 package tic_tac_toe
 
 type Rules struct {
-	config Config
+	winningLines [][]int
 }
 
-func NewRules(config Config) *Rules {
-	return &Rules{config}
+func NewRules(winningLines [][]int) *Rules {
+	return &Rules{winningLines}
 }
 
 func (r *Rules) ValidMove(move int, board *Board) bool {
-	return board.Cells()[move] == ""
+	for _, v := range board.AvailableCells() {
+		if v == move {
+			return true
+		}
+	}
+	return false
 }
 
 func (r *Rules) Winner(board *Board) (winner bool, symbol string) {
 	var line []string
-	for _, i := range r.config.WinningLines() {
+	for _, i := range r.winningLines {
 		line = mapSymbols(i, board.Cells())
 		if uniqueSymbols(line) {
 			winner = true
