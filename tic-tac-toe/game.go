@@ -10,13 +10,14 @@ func NewGame(ui UI, rules *Rules) *Game {
 }
 
 func (game *Game) Play(board *Board, currentPlayer Player, opponent Player) {
-	game.ui.DisplayMessage(board.ToString())
+	game.ui.PrintBoard(board)
 	move := currentPlayer.GetMove(board, ChooseCell)
 	board.MakeMove(move, currentPlayer.Symbol())
 
 	winner, symbol := game.rules.Winner(board)
 
 	if winner {
+		game.ui.PrintBoard(board)
 		game.ui.DisplayMessage("Player " + symbol + " wins!")
 		game.ui.DisplayMessage(MainMenu)
 	} else if board.IsFull() {

@@ -16,17 +16,15 @@ func makePlayer(symbol string, ui UI, rules *Rules) Player {
 var _ = Describe("Human Player", func() {
 	var (
 		ui         UI
-		mockReader *bytes.Buffer
-		mockWriter *bytes.Buffer
+		mockReader bytes.Buffer
+		mockWriter bytes.Buffer
 		board      *Board
 		rules      *Rules
 	)
 
 	BeforeEach(func() {
-		moves := "5\n1\n"
-		mockReader = NewMockReader(moves)
-		mockWriter = NewMockWriter()
-		ui = NewConsoleUI(NewInput(mockReader), NewOutput(mockWriter))
+		mockReader.Reset()
+		ui = NewConsoleUI(&mockReader, &mockWriter)
 		rules = new(Rules)
 		board = NewBoard(3)
 	})
@@ -44,6 +42,9 @@ var _ = Describe("Human Player", func() {
 		board.MakeMove(7, "x")
 		availableCells := []int{0, 1, 4, 5, 6, 8}
 
+		moves := "5\n1\n"
+		mockReader.WriteString(moves)
+
 		move := player.GetMove(board, ChooseCell)
 		Expect(availableCells).To(ContainElement(move))
 	})
@@ -54,6 +55,9 @@ var _ = Describe("Human Player", func() {
 		board.MakeMove(4, "o")
 		board.MakeMove(3, "o")
 		board.MakeMove(7, "x")
+
+		moves := "5\n1\n"
+		mockReader.WriteString(moves)
 
 		move := player.GetMove(board, ChooseCell)
 		Expect(move).To(Equal(0))

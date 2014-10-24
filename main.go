@@ -1,20 +1,21 @@
 package main
 
 import (
-	"bytes"
+	"bufio"
 	. "github.com/MikeDanaher/go-tic-tac-toe/tic-tac-toe"
 	"os"
 )
 
 func main() {
-	console.DisplayMessage(MainMenu)
+	config := new(Config3x3)
+	rules := NewRules(config)
+	board := NewBoard(config.BoardSize())
 
-	rules := NewRules(new(Console3x3))
-	board := NewBoard(rules.BoardSize)
-
-	input := NewInput(bytes.NewBuffer(os.Stdin))
-	output := NewOutput(bytes.NewBuffer(os.Stdout))
+	input := NewInput(bufio.NewReader(os.Stdin))
+	output := NewOutput(os.Stdout)
 	console := NewConsoleUI(input, output)
+
+	console.DisplayMessage(MainMenu)
 
 	player1 := NewHumanPlayer(console, rules)
 	player1.SetSymbol("x")

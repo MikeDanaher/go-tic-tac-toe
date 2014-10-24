@@ -1,36 +1,33 @@
 package tic_tac_toe
 
 import (
+	"io"
 	"strconv"
 )
 
 type ConsoleUI struct {
-	in  *Input
-	out *Output
+	in  Reader
+	out Writer
 }
 
-const (
-	MainMenu = "Tic-Tac-Toe in Go\n" +
-		"=====================================================\n" +
-		"Play the game by entering the number of your choice:\n" +
-		"1. Human vs. Human game\n" +
-		"2. Human vs. Computer game\n" +
-		"3. Exit\n"
-	ChooseCell    = "Please select an available cell [1-9]: "
-	InvalidNumber = "Please enter a valid number: "
-	InvalidMove   = "Invalid move, try again: "
-)
-
-func NewConsoleUI(in *Input, out *Output) UI {
+func NewConsoleUI(in Reader, out Writer) UI {
 	return &ConsoleUI{in, out}
 }
 
 func (c *ConsoleUI) DisplayMessage(message string) {
-	c.out.Write(message)
+	c.out.WriteString(message)
+}
+
+func (c *ConsoleUI) PrintBoard(board *Board) {
+	c.out.WriteString(board.String())
+}
+
+func (c *ConsoleUI) GetString() string {
+	return readLine(c.in)
 }
 
 func (c *ConsoleUI) GetNumber() int {
-	input, err := strconv.Atoi(c.in.Read())
+	input, err := strconv.Atoi(readLine(c.in))
 
 	if err != nil {
 		c.DisplayMessage(InvalidNumber)
@@ -38,4 +35,17 @@ func (c *ConsoleUI) GetNumber() int {
 	}
 
 	return input
+}
+
+func readLine(reader Reader) string {
+	var buffer = make([]byte, 1)
+	var output string
+	for {
+		_, err := reader.Read(buffer)
+		if buffer[0] == '\n' || err == io.EOF {
+			break
+		}
+		output += string(buffer[0])
+	}
+	return output
 }

@@ -45,6 +45,6 @@ var _ = Describe("Board", func() {
 		board.MakeMove(4, "x")
 		board.MakeMove(5, "o")
 		board.MakeMove(8, "x")
-		Expect(board.ToString()).To(Equal("\n   | o |   \n-----------\n   | x | o \n-----------\n   |   | x \n\n"))
+		Expect(board.String()).To(Equal("\n   | o |   \n-----------\n   | x | o \n-----------\n   |   | x \n\n"))
 	})
 })

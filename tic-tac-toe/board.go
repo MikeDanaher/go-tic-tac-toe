@@ -32,7 +32,7 @@ func (b *Board) IsFull() bool {
 	return true
 }
 
-func (b *Board) ToString() string {
+func (b *Board) String() string {
 	tempBoard := insertSpaces(b.cells)
 	tempRows := createRows(tempBoard, b.rowSize)
 	formattedRows := insertVerticalLines(tempRows)
