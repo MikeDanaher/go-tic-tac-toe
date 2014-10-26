@@ -69,7 +69,7 @@ func buildPlayers(ui UI, rules *Rules, gameType string) (Player, Player) {
 		p2 = NewHumanPlayer(ui, rules)
 	case COMPUTER:
 		p1 = NewHumanPlayer(ui, rules)
-		p2 = NewHumanPlayer(ui, rules)
+		p2 = NewComputerPlayer()
 	}
 	chooseSymbols(ui, p1, p2)
 	return chooseFirstPlayer(ui, p1, p2)

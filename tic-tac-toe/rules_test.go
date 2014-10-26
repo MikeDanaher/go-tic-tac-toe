@@ -12,7 +12,7 @@ var _ = Describe("Rules", func() {
 	var rules *Rules
 
 	BeforeEach(func() {
-		config = new(Console3x3)
+		config = new(Config3x3)
 		board = NewBoard(config.BoardSize())
 		rules = NewRules(config.WinningLines())
 	})
