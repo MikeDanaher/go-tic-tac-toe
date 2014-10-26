@@ -5,6 +5,7 @@ import (
 )
 
 func main() {
-	setup := NewSetup(new(Console3x3))
+	setup := NewConsoleSetup(new(Config3x3))
 	setup.Run()
+	main()
 }
