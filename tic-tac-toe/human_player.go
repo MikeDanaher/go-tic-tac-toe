@@ -10,20 +10,24 @@ func NewHumanPlayer(ui UI, rules *Rules) Player {
 	return &HumanPlayer{ui: ui, rules: rules}
 }
 
-func (player *HumanPlayer) GetMove(board *Board, opponent string, message string) int {
-	player.ui.DisplayMessage(message)
-	move := player.ui.GetNumber()
-
-	if player.rules.ValidMove(move, board) {
-		return move
-	}
-	return player.GetMove(board, opponent, INVALID_MOVE)
-}
-
 func (player *HumanPlayer) SetSymbol(symbol string) {
 	player.symbol = symbol
 }
 
 func (player *HumanPlayer) Symbol() string {
 	return player.symbol
+}
+
+func (player *HumanPlayer) GetMove(board *Board, opponent string) int {
+	return getValidMove(player.ui, player.rules, board, CHOOSE_CELL)
+}
+
+func getValidMove(ui UI, rules *Rules, board *Board, message string) int {
+	ui.DisplayMessage(message)
+	move := ui.GetNumber()
+
+	if rules.ValidMove(move, board) {
+		return move
+	}
+	return getValidMove(ui, rules, board, INVALID_MOVE)
 }

@@ -38,7 +38,7 @@ var _ = Describe("Human Player", func() {
 		BuildBoard(board, []int{3}, opponent)
 		mockReader.WriteString("5\n")
 
-		move := player.GetMove(board, opponent, CHOOSE_CELL)
+		move := player.GetMove(board, opponent)
 
 		Expect(board.AvailableCells()).To(ContainElement(move))
 	})
@@ -48,7 +48,7 @@ var _ = Describe("Human Player", func() {
 		BuildBoard(board, []int{4, 3}, opponent)
 		mockReader.WriteString("4\n1\n")
 
-		move := player.GetMove(board, opponent, CHOOSE_CELL)
+		move := player.GetMove(board, opponent)
 
 		Expect(move).To(Equal(1))
 		Expect(mockWriter.String()).Should(ContainSubstring(INVALID_MOVE))
