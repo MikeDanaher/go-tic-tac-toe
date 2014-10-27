@@ -22,6 +22,12 @@ var _ = Describe("Board", func() {
 		Expect(board.Cells()[1]).To(Equal("x"))
 	})
 
+	It("Removes a symbol from the board", func() {
+		board.MakeMove(2, "x")
+		board.Remove(2)
+		Expect(board.Cells()[1]).To(Equal(""))
+	})
+
 	It("Gets the available cells on the board", func() {
 		board.MakeMove(3, "o")
 		board.MakeMove(6, "x")

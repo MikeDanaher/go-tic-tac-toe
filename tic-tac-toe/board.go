@@ -19,6 +19,10 @@ func (b *Board) MakeMove(cell int, symbol string) {
 	b.cells[cell-1] = symbol
 }
 
+func (b *Board) Remove(cell int) {
+	b.cells[cell-1] = ""
+}
+
 func (b *Board) Cells() []string {
 	return b.cells
 }
