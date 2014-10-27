@@ -8,9 +8,11 @@ import (
 )
 
 var _ = Describe("Console UI", func() {
-	var ui UI
-	var mockWriter bytes.Buffer
-	var mockReader bytes.Buffer
+	var (
+		ui         UI
+		mockWriter bytes.Buffer
+		mockReader bytes.Buffer
+	)
 
 	BeforeEach(func() {
 		ui = NewConsoleUI(&mockReader, &mockWriter)

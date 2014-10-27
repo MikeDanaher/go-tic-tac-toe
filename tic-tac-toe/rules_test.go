@@ -7,23 +7,27 @@ import (
 )
 
 var _ = Describe("Rules", func() {
-	var config Config
-	var board *Board
-	var rules *Rules
+	var (
+		config Config
+		board  *Board
+		rules  *Rules
+		symbol string
+	)
 
 	BeforeEach(func() {
 		config = new(Config3x3)
 		board = NewBoard(config.BoardSize())
 		rules = NewRules(config.WinningLines())
+		symbol = "x"
 	})
 
 	It("Knows if a move is valid", func() {
-		board.MakeMove(2, "x")
+		board.MakeMove(2, symbol)
 		Expect(rules.ValidMove(3, board)).To(BeTrue())
 	})
 
 	It("Knows if a cell has alreayd been taken", func() {
-		board.MakeMove(2, "x")
+		board.MakeMove(2, symbol)
 		Expect(rules.ValidMove(2, board)).To(BeFalse())
 	})
 
@@ -32,22 +36,18 @@ var _ = Describe("Rules", func() {
 	})
 
 	It("Knows if there is a winner", func() {
-		board.MakeMove(1, "x")
-		board.MakeMove(2, "x")
-		board.MakeMove(3, "x")
+		BuildBoard(board, []int{1, 2, 3}, symbol)
 
-		winner, symbol := rules.Winner(board)
+		winner, winningSymbol := rules.Winner(board)
 		Expect(winner).To(BeTrue())
-		Expect(symbol).To(Equal("x"))
+		Expect(winningSymbol).To(Equal(symbol))
 	})
 
 	It("Knows if there is not a winner", func() {
-		board.MakeMove(1, "x")
-		board.MakeMove(2, "x")
-		board.MakeMove(9, "x")
+		BuildBoard(board, []int{1, 2, 9}, symbol)
 
-		winner, symbol := rules.Winner(board)
+		winner, winningSymbol := rules.Winner(board)
 		Expect(winner).To(BeFalse())
-		Expect(symbol).To(Equal(""))
+		Expect(winningSymbol).To(Equal(""))
 	})
 })

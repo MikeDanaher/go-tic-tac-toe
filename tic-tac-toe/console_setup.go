@@ -9,28 +9,7 @@ type ConsoleSetup struct {
 	player2 Player
 }
 
-const (
-	MAIN_MENU = "\nTIC-TAC-TOE in GO\n" +
-		"=====================================================\n" +
-		"1. Human vs. Human game\n" +
-		"2. Human vs. Computer game\n" +
-		"3. Exit\n" +
-		"Play the game by entering the number of your choice: "
-	CHOOSE_CELL             = "Please select an available cell [1-9]: "
-	INVALID_NUMBER          = "Please enter a valid number: "
-	INVALID_MOVE            = "Invalid move, try again: "
-	CHOOSE_YOUR_SYMBOL      = "Enter your symbol: "
-	CHOOSE_OPPONENTS_SYMBOL = "Enter your opponent's symbol: "
-	CHOOSE_FIRST_PLAYER     = "\n1. You\n" +
-		"2. Opponent\n" +
-		"Who will go first? "
-	TIE_GAME   = "\n*** It's a Tie! ***\n"
-	PLAY_AGAIN = "\nPlay Again?\n"
-	HUMAN      = "HUMAN"
-	COMPUTER   = "COMPUTER"
-)
-
-func NewConsoleSetup(config Config) *ConsoleSetup {
+func NewConsoleSetup(config Config) Setup {
 	ui := NewConsoleUI(os.Stdin, os.Stdout)
 	gameType := chooseGame(ui)
 
@@ -52,10 +31,12 @@ func chooseGame(ui UI) string {
 
 	switch choice {
 	case 1:
-		return HUMAN
+		return HUMAN_v_HUMAN
 	case 2:
-		return COMPUTER
+		return HUMAN_v_COMPUTER
 	case 3:
+		return COMPUTER_v_COMPUTER
+	case 4:
 		os.Exit(0)
 	}
 	return chooseGame(ui)
@@ -64,11 +45,14 @@ func chooseGame(ui UI) string {
 func buildPlayers(ui UI, rules *Rules, gameType string) (Player, Player) {
 	var p1, p2 Player
 	switch gameType {
-	case HUMAN:
+	case HUMAN_v_HUMAN:
 		p1 = NewHumanPlayer(ui, rules)
 		p2 = NewHumanPlayer(ui, rules)
-	case COMPUTER:
+	case HUMAN_v_COMPUTER:
 		p1 = NewHumanPlayer(ui, rules)
+		p2 = NewComputerPlayer(rules)
+	case COMPUTER_v_COMPUTER:
+		p1 = NewComputerPlayer(rules)
 		p2 = NewComputerPlayer(rules)
 	}
 	chooseSymbols(ui, p1, p2)

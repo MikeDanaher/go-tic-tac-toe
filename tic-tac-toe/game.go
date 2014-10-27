@@ -17,20 +17,16 @@ func (game *Game) Play(board *Board, currentPlayer Player, opponent Player) {
 	winner, symbol := game.rules.Winner(board)
 
 	if winner {
-		game.EndGame(board, Winner(symbol))
+		game.End(board, PrintWinner(symbol))
 	} else if board.IsFull() {
-		game.EndGame(board, TIE_GAME)
+		game.End(board, TIE_GAME)
 	} else {
 		game.Play(board, opponent, currentPlayer)
 	}
 }
 
-func (game *Game) EndGame(board *Board, message string) {
-	game.ui.PrintBoard(board)
+func (game *Game) End(board *Board, message string) {
 	game.ui.DisplayMessage(message)
+	game.ui.PrintBoard(board)
 	game.ui.DisplayMessage(PLAY_AGAIN)
-}
-
-func Winner(s string) string {
-	return "\n*** Player " + s + " wins! ***\n"
 }
