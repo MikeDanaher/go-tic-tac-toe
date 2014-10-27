@@ -18,6 +18,9 @@ func NewConsoleSetup(config Config) Setup {
 	game := NewGame(ui, rules)
 	player1, player2 := buildPlayers(ui, rules, gameType)
 
+	ui.DisplayMessage(DESCRIBE_GAME)
+	ui.DisplayMessage(CELL_NUMBERS)
+
 	return &ConsoleSetup{board, game, player1, player2}
 }
 

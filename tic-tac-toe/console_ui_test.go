@@ -19,7 +19,7 @@ var _ = Describe("Console UI", func() {
 	})
 
 	It("Displays a string to the given output", func() {
-		message := CHOOSE_CELL
+		message := DESCRIBE_GAME
 		ui.DisplayMessage(message)
 		Expect(mockWriter.String()).Should(ContainSubstring(message))
 	})

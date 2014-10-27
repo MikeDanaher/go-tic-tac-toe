@@ -19,7 +19,7 @@ func (player *HumanPlayer) Symbol() string {
 }
 
 func (player *HumanPlayer) GetMove(board *Board, opponent string) int {
-	return getValidMove(player.ui, player.rules, board, CHOOSE_CELL)
+	return getValidMove(player.ui, player.rules, board, ChooseCell(board.AvailableCells()))
 }
 
 func getValidMove(ui UI, rules *Rules, board *Board, message string) int {
