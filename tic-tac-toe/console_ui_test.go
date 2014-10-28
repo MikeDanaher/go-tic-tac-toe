@@ -38,8 +38,20 @@ var _ = Describe("Console UI", func() {
 
 	It("Prints a board", func() {
 		board := NewBoard(3)
-		ui.PrintBoard(board)
-		Expect(mockWriter.String()).Should(ContainSubstring(board.String()))
+		ui.UpdateBoard(board)
+		Expect(mockWriter.String()).To(ContainSubstring(board.String()))
 	})
 
+	It("Ends the game with a winner", func() {
+		board := NewBoard(3)
+		symbol := "x"
+		ui.EndWithWinner(board, symbol)
+		Expect(mockWriter.String()).To(ContainSubstring(PrintWinner(symbol)))
+	})
+
+	It("Ends the game with a tie", func() {
+		board := NewBoard(3)
+		ui.EndWithTie(board)
+		Expect(mockWriter.String()).To(ContainSubstring(TIE_GAME))
+	})
 })

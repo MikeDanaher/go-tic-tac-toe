@@ -10,23 +10,17 @@ func NewGame(ui UI, rules *Rules) *Game {
 }
 
 func (game *Game) Play(board *Board, currentPlayer Player, opponent Player) {
-	game.ui.PrintBoard(board)
+	game.ui.UpdateBoard(board)
 	move := currentPlayer.GetMove(board, opponent.Symbol())
 	board.MakeMove(move, currentPlayer.Symbol())
 
-	winner, symbol := game.rules.Winner(board)
+	winner, symbol := game.rules.CheckWinner(board)
 
 	if winner {
-		game.End(board, PrintWinner(symbol))
+		game.ui.EndWithWinner(board, symbol)
 	} else if board.IsFull() {
-		game.End(board, TIE_GAME)
+		game.ui.EndWithTie(board)
 	} else {
 		game.Play(board, opponent, currentPlayer)
 	}
-}
-
-func (game *Game) End(board *Board, message string) {
-	game.ui.DisplayMessage(message)
-	game.ui.PrintBoard(board)
-	game.ui.DisplayMessage(PLAY_AGAIN)
 }

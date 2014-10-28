@@ -4,5 +4,7 @@ type UI interface {
 	DisplayMessage(string)
 	GetNumber() int
 	GetString() string
-	PrintBoard(*Board)
+	UpdateBoard(*Board)
+	EndWithWinner(*Board, string)
+	EndWithTie(*Board)
 }

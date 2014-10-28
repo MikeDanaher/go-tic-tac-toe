@@ -17,7 +17,7 @@ func (r *Rules) ValidMove(move int, board *Board) bool {
 	return false
 }
 
-func (r *Rules) Winner(board *Board) (winner bool, symbol string) {
+func (r *Rules) CheckWinner(board *Board) (winner bool, symbol string) {
 	var line []string
 	for _, i := range r.winningLines {
 		line = mapSymbols(i, board.Cells())

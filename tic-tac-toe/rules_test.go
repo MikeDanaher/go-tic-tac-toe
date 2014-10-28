@@ -38,7 +38,7 @@ var _ = Describe("Rules", func() {
 	It("Knows if there is a winner", func() {
 		BuildBoard(board, []int{1, 2, 3}, symbol)
 
-		winner, winningSymbol := rules.Winner(board)
+		winner, winningSymbol := rules.CheckWinner(board)
 		Expect(winner).To(BeTrue())
 		Expect(winningSymbol).To(Equal(symbol))
 	})
@@ -46,7 +46,7 @@ var _ = Describe("Rules", func() {
 	It("Knows if there is not a winner", func() {
 		BuildBoard(board, []int{1, 2, 9}, symbol)
 
-		winner, winningSymbol := rules.Winner(board)
+		winner, winningSymbol := rules.CheckWinner(board)
 		Expect(winner).To(BeFalse())
 		Expect(winningSymbol).To(Equal(""))
 	})

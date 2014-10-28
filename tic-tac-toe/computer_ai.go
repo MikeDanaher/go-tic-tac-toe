@@ -9,7 +9,7 @@ func NewComputerAI(rules *Rules) *ComputerAI {
 }
 
 func (c *ComputerAI) GetBestMove(board *Board, depth int, currentPlayer string, opponent string, scores map[int]int) int {
-	if winner, _ := c.rules.Winner(board); winner {
+	if winner, _ := c.rules.CheckWinner(board); winner {
 		return -1
 	}
 

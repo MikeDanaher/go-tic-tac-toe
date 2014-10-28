@@ -15,9 +15,9 @@ var _ = Describe("Game", func() {
 		mockReader bytes.Buffer
 		board      *Board
 		rules      *Rules
-		player1    Player
+		p1         Player
 		p1Symbol   string
-		player2    Player
+		p2         Player
 		p2Symbol   string
 		game       *Game
 	)
@@ -33,24 +33,27 @@ var _ = Describe("Game", func() {
 	})
 
 	It("Ends in a tie if the board fills up", func() {
-		player1 = NewComputerPlayer(rules)
-		player2 = NewComputerPlayer(rules)
-		player1.SetSymbol(p1Symbol)
-		player2.SetSymbol(p2Symbol)
+		p1Moves := []int{7, 6, 2, 9, 5}
+		p1 = NewMockPlayer(p1Moves)
+		p2Moves := []int{4, 8, 3, 1}
+		p2 = NewMockPlayer(p2Moves)
+		p1.SetSymbol(p1Symbol)
+		p2.SetSymbol(p2Symbol)
 
-		game.Play(board, player1, player2)
+		game.Play(board, p1, p2)
 
 		Expect(mockWriter.String()).To(ContainSubstring(TIE_GAME))
 	})
 
 	It("Ends with a winner if a player gets three in a row", func() {
-		player1 = NewHumanPlayer(ui, rules)
-		player2 = NewHumanPlayer(ui, rules)
-		player1.SetSymbol(p1Symbol)
-		player2.SetSymbol(p2Symbol)
-		mockReader.WriteString("5\n2\n9\n3\n1\n")
+		p1Moves := []int{6, 3, 9, 5}
+		p1 = NewMockPlayer(p1Moves)
+		p2Moves := []int{7, 2, 1}
+		p2 = NewMockPlayer(p2Moves)
+		p1.SetSymbol(p1Symbol)
+		p2.SetSymbol(p2Symbol)
 
-		game.Play(board, player1, player2)
+		game.Play(board, p1, p2)
 
 		Expect(mockWriter.String()).To(ContainSubstring(PrintWinner(p1Symbol)))
 	})
