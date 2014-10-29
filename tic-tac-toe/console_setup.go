@@ -5,12 +5,12 @@ import "os"
 type ConsoleSetup struct {
 	board   *Board
 	game    *Game
-	player1 Player
-	player2 Player
+	Player1 Player
+	Player2 Player
 }
 
-func NewConsoleSetup(config Config) Setup {
-	ui := NewConsoleUI(os.Stdin, os.Stdout)
+func NewConsoleSetup(config Config) *ConsoleSetup {
+	ui := NewConsoleUI(config.Input(), config.Output())
 	gameType := chooseGame(ui)
 
 	rules := NewRules(config.WinningLines())
@@ -25,7 +25,7 @@ func NewConsoleSetup(config Config) Setup {
 }
 
 func (s *ConsoleSetup) Run() {
-	s.game.Play(s.board, s.player1, s.player2)
+	s.game.Play(s.board, s.Player1, s.Player2)
 }
 
 func chooseGame(ui UI) string {

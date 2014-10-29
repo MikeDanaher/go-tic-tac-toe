@@ -36,7 +36,7 @@ var _ = Describe("Human Player", func() {
 	It("Gets the next move from the human player", func() {
 		BuildBoard(board, []int{2, 7}, symbol)
 		BuildBoard(board, []int{3}, opponent)
-		mockReader.WriteString("5\n")
+		SetResponses(&mockReader, []string{"5"})
 
 		move := player.GetMove(board, opponent)
 
@@ -46,7 +46,7 @@ var _ = Describe("Human Player", func() {
 	It("Prompts again if the given move was invalid", func() {
 		BuildBoard(board, []int{2, 7}, symbol)
 		BuildBoard(board, []int{4, 3}, opponent)
-		mockReader.WriteString("4\n1\n")
+		SetResponses(&mockReader, []string{"4", "1"})
 
 		move := player.GetMove(board, opponent)
 

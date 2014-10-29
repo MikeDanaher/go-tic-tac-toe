@@ -25,13 +25,13 @@ var _ = Describe("Console UI", func() {
 	})
 
 	It("Gets a numerical response from the user", func() {
-		mockReader.WriteString("5\n")
+		SetResponses(&mockReader, []string{"5"})
 		move := ui.GetNumber()
 		Expect(move).To(Equal(5))
 	})
 
 	It("Gets a string response from the user", func() {
-		mockReader.WriteString("symbol\n")
+		SetResponses(&mockReader, []string{"symbol"})
 		move := ui.GetString()
 		Expect(move).To(Equal("symbol"))
 	})
