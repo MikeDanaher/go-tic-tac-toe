@@ -1,7 +1,7 @@
 package tic_tac_toe_test
 
 import (
-	. "github.com/MikeDanaher/go-tic-tac-toe/tic-tac-toe"
+	. "../tic-tac-toe"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )

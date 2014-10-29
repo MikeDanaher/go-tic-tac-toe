@@ -19,7 +19,13 @@ While in the 'go-tic-tac-toe' directory start the game with:
 
 ### Running the tests
 
-The tests were written using [Ginkgo](http://onsi.github.io/ginkgo/). Move into the tic-tac-toe directory and run them using `ginkgo` or `go test`.
+The tests were written using [Ginkgo](http://onsi.github.io/ginkgo/). You'll need to set your $GOPATH and get Ginkgo to run the tests.
+
+1. Set $GOPATH, Go recomends `$ export GOPATH=$HOME/go`
+2. Get Ginkgo `$ go get github.com/onsi/ginkgo/ginkgo`
+2. Get Gomega `$ go get github.com/onsi/gomega`
+
+After installing Ginkgo, move into the tic-tac-toe directory and run them using `ginkgo` or `go test`.
 
 1. `cd tic-tac-toe`
 2. `ginkgo`
