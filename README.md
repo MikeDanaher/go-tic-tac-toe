@@ -15,20 +15,21 @@ While in the 'go-tic-tac-toe' directory start the game with:
 
 `./go-tic-tac-toe`
 
-*This was compiled on a Mac running OS X. You may need to recompile by using `go build`. Then run the above command.*
+*This was compiled on a Mac running OS X. If the game doesn't run, you may need to recompile by using `go build`. Then run the above command.*
 
 ### Running the tests
 
-The tests were written using [Ginkgo](http://onsi.github.io/ginkgo/). You'll need to set your $GOPATH and get Ginkgo to run the tests.
+The tests were written using [Ginkgo](http://onsi.github.io/ginkgo/). You'll need to set your $GOPATH and get Ginkgo & Gomega to run the tests.
 
 1. Set $GOPATH, Go recomends `$ export GOPATH=$HOME/go`
+  * The game should also be placed in the go directory
 2. Get Ginkgo `$ go get github.com/onsi/ginkgo/ginkgo`
 2. Get Gomega `$ go get github.com/onsi/gomega`
 
-After installing Ginkgo, move into the tic-tac-toe directory and run them using `ginkgo` or `go test`.
+After installing Ginkgo, move into the tic-tac-toe directory and run them using `go test` or `ginkgo`.
 
 1. `cd tic-tac-toe`
-2. `ginkgo`
+2. `go test`
 
 ### Additional Information
 
